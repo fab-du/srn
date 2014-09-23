@@ -2,7 +2,7 @@
 
 
 exports.einloggen = function(req, res) {
-  res.render('index', { title: 'Einloggen' });
+  res.render('einloggen', { title: 'Einloggen' });
   console.log("REq come here");
 };
 

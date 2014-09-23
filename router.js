@@ -1,3 +1,5 @@
+var express = require('express');
+var path = require('path');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var registration= require('./routes/registrieren'); 
@@ -20,7 +22,7 @@ module.exports = function (app) {
 
 
 
-    // development error handler
+    // development error handler//{{{
     // will print stacktrace
     if (app.get('env') === 'development') {
         app.use(function(err, req, res, next) {
@@ -40,7 +42,7 @@ module.exports = function (app) {
             message: err.message,
             error: {}
         });
-    });
+    });//}}}
 
     return app; 
 }
