@@ -2,7 +2,7 @@
 <% include layout %>
 
 <div id="registrieren">
-<form action="/registrieren" method="POST">
+<form action="/registration" method="POST">
 
     <br />
 <div class="row">
@@ -10,7 +10,7 @@
         <div class="col-lg-6">
                 <div class="input-group">
                     <span class="input-group-addon">Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
-                    <input type="text" class="form-control" placeholder="">
+                    <input name='name' type="text" class="form-control" placeholder="">
                 </div>
         </div>
 </div>
@@ -20,7 +20,7 @@
 <div class="col-lg-6">
         <div class="input-group">
             <span class="input-group-addon">Vorname&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
-            <input type="text" class="form-control" placeholder="">
+            <input name='vorname' type="text" class="form-control" placeholder="">
         </div>
 </div>
 </div>
@@ -31,7 +31,7 @@
 <div class="col-lg-6">
         <div class="input-group">
             <span class="input-group-addon">Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
-            <input type="text" class="form-control" placeholder="">
+            <input name='email' type="text" class="form-control" placeholder="">
         </div>
 </div>
 </div>
@@ -43,7 +43,7 @@
         <div class="col-lg-6">
                 <div class="input-group">
                     <span class="input-group-addon">Benutzer Name </span>
-                    <input type="text" class="form-control" placeholder="">
+                    <input name='username' type="text" class="form-control" placeholder="">
                 </div>
         </div>
 </div>
@@ -53,7 +53,7 @@
         <div class="col-lg-6">
                 <div class="input-group">
                     <span class="input-group-addon">Pass Phrase  &nbsp;&nbsp;&nbsp;&nbsp;  </span>
-                    <input type="password" class="form-control" placeholder="">
+                    <input name='password' type="password" class="form-control" placeholder="">
                 </div>
         </div>
 </div>

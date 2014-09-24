@@ -1,15 +1,11 @@
 var express = require('express');
 var path = require('path');
-var index = require('./routes/index');
-var registration= require('./routes/registrieren'); 
-var einloggen= require('./routes/einloggen');
+var app = require('./app')
+var index = require('./routes/index.js');
+var registration= require('./routes/registrieren.js'); 
+var einloggen= require('./routes/einloggen.js');
 
 module.exports = function (app) {
-
-    //app.use('/', routes);
-    //app.use('/einloggen',einloggen.einloggen);
-    //app.use('/einloggenPost',einloggen.einloggenPost);
-    //app.use('/registration',registration.registration);
 
     app.get('/', index);
     app.get('/index', index);
@@ -18,7 +14,7 @@ module.exports = function (app) {
     app.post('/einloggen', einloggen.processPost);
 
     app.get('/registration', registration.registration);
-    app.post('/registrieren', registration.processPost);
+    app.post('/registration', registration.processPost);
 
 
 
