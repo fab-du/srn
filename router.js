@@ -1,15 +1,24 @@
 var express = require('express');
 var path = require('path');
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var index = require('./routes/index');
 var registration= require('./routes/registrieren'); 
 var einloggen= require('./routes/einloggen');
 
 module.exports = function (app) {
-    app.use('/', routes);
-    app.use('/users', users);
-    app.use('/einloggen',einloggen.einloggen);
-    app.use('/registration',registration.registration);
+
+    //app.use('/', routes);
+    //app.use('/einloggen',einloggen.einloggen);
+    //app.use('/einloggenPost',einloggen.einloggenPost);
+    //app.use('/registration',registration.registration);
+
+    app.get('/', index);
+    app.get('/index', index);
+
+    app.get('/einloggen', einloggen.einloggen );
+    app.post('/einloggen', einloggen.processPost);
+
+    app.get('/registration', registration.registration);
+    app.post('/registrieren', registration.processPost);
 
 
 

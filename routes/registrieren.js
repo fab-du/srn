@@ -5,4 +5,9 @@ exports.registration = function(req, res) {
 };
 
 
+exports.processPost = function(req, req){
+    console.log("Yeeahh Post for Registration works ");
+};
+
+
 
