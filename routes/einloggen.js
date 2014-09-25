@@ -1,5 +1,7 @@
 var app = require('../app'); 
 var mongoose = require('../db/setup.js'); 
+var  expressValidator = require('express-validator'); 
+var validate = require('../validator/validate.js');
 
 exports.einloggen = function(req, res) {
 
@@ -8,8 +10,12 @@ exports.einloggen = function(req, res) {
 };
 
 exports.processPost = function (req, res) {
-    var username = req.body.username; 
-    var pass = req.body.password; 
+
+    validate.validate(req);
+var errors = req.validationErrors();
+console.log(errors);
+if(!errors)
+    res.send('No errors detected ');
     console.log(username, pass);
     //console.log(mongoose);
     //mongoose.setup();
