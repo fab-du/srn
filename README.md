@@ -46,6 +46,23 @@ Benutzer koennen neuen schluessel erzeugen lassen, Schluessen an Dritten
 uebergeben , zurueckziehen, loeschen . 
 
 
+## Sicherheitkonzept. 
+
+* Sicherheimechanismus beim Einloggen. 
+Die User werden nach ihre Bnutzername gefragt plus Passphrase. 
+
+1. Es wird Passphrase ueber Password ausgewaehlt. Dh , wir implementiert 
+   kein normale password system. 
+* Zum Beispiel : ein password wie DaZ$%128kle wird bei der meinsten System als sicher 
+gezeichnet , ist est aber nicht , da von ein Computer mit normalen Leistung , die heute 
+sehr zugaenglich , nur 8 Stunde (im Worstcase )dauernt wird bis der Hacker den richtige Password 
+gefundet hat. was nicht der fall ist wenn den Benutzer sich ein Password wie "JeMangeraiZZZaLaMaisonQuandtu sera parti", 
+gemässt wird es Jahren dauert. 
+
+2. Die richtigkeit Prüfung von User Eingabe werden , sowohl clientseitig als auch serverseitig durchgeführt . 
+
+
+
 
 
 
