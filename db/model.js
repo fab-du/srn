@@ -13,12 +13,14 @@ name:{
 }, 
 
 info:{
-    email: String /* We dont ask more personnal info since we are not facebook */
+    email: {type: String 
+            ,unique: true}/* We dont ask more personnal info since we are not facebook */
 }, 
 
 login:{
-    userName: String, 
-    password: String 
+    userName: {type: String, 
+                unique: true} 
+    ,password: String 
 }
 
 });//}}}

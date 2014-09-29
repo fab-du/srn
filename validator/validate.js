@@ -3,23 +3,22 @@ var validate_einloggen = require('./validateEinloggen.js');
 var validate_registration = require('./validateRegistration.js');
 
 
-exports.validate = function (req) { /*The req object come from the router*/
+exports.validate = function (req , obj_to_validate) { /*The req object come from the router*/
    
     if(req.path == "/einloggen") 
     {
-        validate_einloggen.validate(req);
+       return validate_einloggen.validate( obj_to_validate );
     }
     else if( req.path == "/registration")
     {
-        validate_registration.validate(req);
+        return validate_registration.validate( obj_to_validate );
     }
     else
     {
-        //Do nothing for now  
+        return; 
     }
 
-
-    //End of the module
+    return; 
 };
 
 

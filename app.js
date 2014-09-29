@@ -4,43 +4,21 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('./db/setup.js');
-var validator = require('express-validator');
-var CustomValidators = require('./validator/customValidators.js'); 
-
 
 mongoose.setup();
-
 
 var setup  = require('./setup.js');
 var router = require('./router.js');
 var app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static( path.join(__dirname, 'bower_components') ));
-
 app = setup(app);
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(validator());
-app.use(validator({
-  errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
-
-    while(namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
-    }
-    return {
-      param : formParam,
-      msg   : msg,
-      value : value
-    };
-  }
-}));
-app.use(validator(CustomValidators));
+app.use(express.static( path.join(__dirname, 'bower_components') ));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app = router(app);
 
