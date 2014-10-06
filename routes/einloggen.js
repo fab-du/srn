@@ -1,41 +1,51 @@
 var mongoose = require('../db/setup.js'); 
 var validate = require('../validator/validate.js');
 
-var einloggen = exports.einloggen = function(req, res) {
+var db = require('../db/setup.js');
+var User = db.getUserModel();
+
+exports.einloggen = function(req, res) {
   res.render('einloggen', { title: 'Einloggen' });
   console.log("REq come here");
 };
 
 exports.processPost = function (req, res) {
+    console.log("We are processing");
 
-    var wichButton = req.param('action');
+    var newUser={};
+    newUser.username= req.body.username; 
+    newUser.password= req.body.password; 
 
-req.method = 'get'; 
+    var richtig = validate.validate(req, newUser);
+    console.log(richtig);
 
-    if(wichButton == 'einloggen')
+    if( richtig )
     {
-        var obj = [ req.body.username, req.body.password];
-        var errors = validate.validate(req, obj);
-        
-        if(!errors)
-        {
-            //open user space 
-        }
-        else 
-        {
-            res.redirect('/einloggen');
-        }
+        authentification(newUser); 
     }
-    else if( wichButton == 'index')
-    {
-        res.redirect('/'); 
-    }
-    else if(wichButton == 'registrieren')
-    {
-        res.redirect('/registration'); 
-    }
-
 
 };
+
+function authentification( newUser ) {//{{{
+    var isError = true; 
+
+    User.findOne({"_id": newUser.username}, function (err, user) {
+        if(err) {
+            console.error("no user with this name");
+        }
+        else
+        {
+            //isError = user.authentificate(newUser.password);
+            console.log(user);
+        }
+    });
+
+    return isError; 
+}//}}}
+
+exports.userspace= function(req, res){
+    res.render("app-template", {title: 'welcome user'});
+};
+
 
 

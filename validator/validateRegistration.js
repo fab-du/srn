@@ -13,13 +13,16 @@ var einlogValidator = require('./validateEinloggen.js');
 
 exports.validate = function ( validation_obj ) {
     var obj = validation_obj; 
-    var forEinlog = [ obj[0], obj[1] ];
+    var forEinlog = {};
+    forEinlog.username = obj.username; 
+    forEinlog.password = obj.password; 
+
     var test = false; 
 
     if (einlogValidator.validate( forEinlog )&& 
-         obj[2] !== null && 
-         obj[3] !== null && 
-         obj[4] !== null && validator.isEmail(obj[4]))
+         obj.name !== null && 
+         obj.vorname !== null && 
+         obj.email !== null && validator.isEmail(obj.email))
      {
         test = true;  
      }

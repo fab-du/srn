@@ -3,8 +3,8 @@ var user_name_regex = /^[a-zA-Z\-]+$/ ;
 var foo = exports.validate = function validate( obj_to_validate ) {
     var obj = obj_to_validate; 
     var test = false; 
-    var user_name = obj[0];
-    var password  = obj[1];
+    var user_name = obj.username;
+    var password  = obj.password;
 
     if(  user_name != null &&
         user_name.length > 6 &&

@@ -1,5 +1,6 @@
 var mongoose = require('../db/setup.js');
 var validate = require('../validator/validate.js');
+var User = mongoose.getUserModel();
 
 
 exports.registration = function(req, res) {
@@ -8,44 +9,56 @@ exports.registration = function(req, res) {
 
 exports.processPost = function(req, res){
 
-    var obj = [ req.body.username, req.body.password, 
-                req.body.name, req.body.vorname, 
-                req.body.email ];
-            var errors  = validate.validate(req, obj);
+    var errors={};
+    var richtig=true; 
+    var newUser={};
 
-    if(!errors){
-        console.log(errors);
-        mongoose.setup();
-        var User = mongoose.getUserModel();
+    newUser.username= req.body.username; 
+    newUser.password= req.body.password; 
+    newUser.email   = req.body.email; 
+    newUser.name    = req.body.name; 
+    newUser.vorname = req.body.vorname; 
 
-        var foo = new User(
-        {
-            salt: "SalutMan309829384", 
-            name:{
-                    first: req.body.name, 
-                    second: req.body.name, 
-                }, 
+    richtig = validate.validate(req, newUser);
+    console.log("cest juste", richtig);
 
-            info:{
-                    email: req.body.email /* We dont ask more personnal info since we are not facebook */
-                 }, 
-
-            login:{
-                    userName: req.body.username, 
-                    password: req.body.password 
-            }
-        });
-
-        foo.save( function (err) {
-            if(err) return console.error(err);
-            console.log("new user have been registered");
-        } );
-    }
-    else /*fehler occur*/
+    if(richtig)
     {
-    
+        authentification(errors, newUser);
     }
+
 };
 
 
+function authentification( errors, foo ) {
+
+    console.log(foo);
+        var isError=true; 
+
+        User.find({"_id" : foo.username}, function(err, users) {
+            if (users.length > 0) {
+                errors["userNameTaken"] = "The username '" + 
+                    foo.username + "' is already taken";
+                isError = true;
+                
+            } else {
+                // save the user
+                var newCryptUser = new User();
+
+                for (var key in foo) {
+                    newCryptUser[key] = foo[key];
+                }
+
+                newCryptUser.save(function(err) {
+                    if (err) {
+                        return console.error(err)
+                    } 
+                        console.log("user have been added"); 
+                });
+                
+            }
+        });        
+        
+        return isError; 
+}
 

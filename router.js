@@ -16,6 +16,8 @@ module.exports = function (app) {
     app.get('/registration', registration.registration);
     app.post('/registration', registration.processPost);
 
+    app.get("/userspace", einloggen.userspace)
+
 
 
     // catch 404 and forward to error handler

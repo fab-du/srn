@@ -6,44 +6,37 @@ var mongoose = require('mongoose'),//{{{
 
 
 var User = new Schema({
+
+
+_id : {type: String}, // _id = username 
 salt: String, 
-name:{
-    first: String, 
-    second: String, 
-}, 
 
-info:{
-    email: {type: String 
-            ,unique: true}/* We dont ask more personnal info since we are not facebook */
-}, 
+name: String, 
+vorname: String, 
 
-login:{
-    userName: {type: String, 
-                unique: true} 
-    ,password: String 
-}
+email: {type: String }, /* We dont ask more personnal info since we are not facebook */
+
+hashedPassword: {type : String, index: {unique: true}}
 
 });//}}}
 
 
-User.pre("save", function (next) {//{{{
-    if(!(this.login.userName && this.login.password 
-        && this.info.email && this.name.first && this.name.second)) 
-        {
-            new(new Error("Invalid Param"));
-        }
-        else
-        {
-            next();
-        }
+//User.pre("save", function (next) {//{{{
+    ////if(!(this.username && this.password && this.email && this.name && this.vorname)) 
+        ////{
+            ////next(new Error("Invalid Param"));
+        ////}
+        ////else
+        ////{
+            ////next();
+        ////}
+//});//}}}
+
+User.virtual("id").get(function(){//{{{
+    return this["_id"].toHexString();
 });//}}}
 
-User.virtual("userName").get(function(){
-    return this["_id"];
-});
-
-
-User.virtual("userName").set(function(userName){
+User.virtual("username").set(function(userName){
     this["_id"] = userName; 
 });
 
@@ -51,25 +44,21 @@ User.method("encryptPassword", function(password) {
     return crypto.createHmac("sha1", this.salt ).update(password).digest("hex");
 });
 
-User.virtual("pass.secure").set(function(pass) {
-    this._password = pass;
+
+
+User.virtual("password").set(function(password) {
+    this._password = password;
     this.salt = this.makeSalt();
-    this.login.password = this.encryptPassword(pass);
+    this.hashedPassword = this.encryptPassword(password);
+}).get(function() {
+    return this._password;
 });
 
-/**
- *
- *
- */
 User.method("makeSalt", function() {
     return Math.round((new Date().valueOf() * Math.random())) + '';
 });
 
 
-/**
- *
- *
- */
 User.method("authentificate", function(plainText) {
     return this.encryptPassword(plainText) == this.password; 
 });

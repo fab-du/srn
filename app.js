@@ -4,12 +4,34 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('./db/setup.js');
+var MongoStore=require('mongo-store')(express);
 
 mongoose.setup();
 
 var setup  = require('./setup.js');
 var router = require('./router.js');
 var app = express();
+
+
+// generate 36-char random hex string as secret
+var secret = "", rand;
+for (var i = 0; i < 36; i++) {
+    rand = Math.floor(Math.random() * 15);
+    if (rand < 10) {
+        // for 0-9
+        secret += String.fromCharCode(48 + rand);
+    } else {
+        // for a-f
+        secret += String.fromCharCode(97 + (rand-10));
+    }
+}
+
+app.use(express.session({
+    secret: secret,
+    store: new MongoStore({
+        db: "user-auth"
+    })
+}));
 
 app = setup(app);
 
